@@ -1,0 +1,28 @@
+version: '2'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: sensu-rabbitmq
+    ports:
+    - "8080:15672"
+    restart: always
+    environment:
+    - "RABBITMQ_DEFAULT_USER=sensu"
+    - "RABBITMQ_DEFAULT_PASS=secret"
+    mem_limit: 1G
+    cpu_shares: 1
+  redis:
+    image: redis:3
+    hostname: sensu-redis
+    restart: always
+    mem_limit: 1G
+    cpu_shares: 1
+  sensu:
+    image: nachum234_sensu
+    restart: always
+    command: "bash"
+    links:
+      - rabbitmq:sensu-rabbitmq
+      - redis:sensu-redis
+    mem_limit: 1G
+    cpu_shares: 1
