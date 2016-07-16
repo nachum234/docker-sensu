@@ -21,4 +21,6 @@ COPY config/config.json /etc/sensu/
 
 COPY docker-entrypoint.sh /entrypoint.sh
 
+ENV TERM vt100
+
 ENTRYPOINT ["/entrypoint.sh"]
